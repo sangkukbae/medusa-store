@@ -83,6 +83,7 @@ const projectConfig = {
 		process.env.NODE_ENV !== 'development'
 			? { ssl: { rejectUnauthorized: false } }
 			: {},
+	worker_mode: process.env.MEDUSA_WORKER_MODE,
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
