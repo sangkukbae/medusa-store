@@ -88,7 +88,9 @@ const modules = {
 
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
 const projectConfig = {
-	redis_url: REDIS_URL,
+	jwtSecret: process.env.JWT_SECRET,
+	cookieSecret: process.env.COOKIE_SECRET,
+	// redis_url: REDIS_URL,
 	database_url: DATABASE_URL,
 	database_type: 'postgres',
 	store_cors: STORE_CORS,
