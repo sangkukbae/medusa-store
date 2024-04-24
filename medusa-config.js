@@ -28,6 +28,9 @@ const ADMIN_CORS =
 // CORS to avoid issues when consuming Medusa from a client
 const STORE_CORS = process.env.STORE_CORS || 'http://localhost:8000';
 
+// Allow any origin ending with vercel.app. For example, admin.vercel.app
+const AUTH_CORS = process.env.AUTH_CORS || /vercel\.app$/;
+
 const DATABASE_URL =
 	process.env.DATABASE_URL || 'postgres://localhost/medusa-starter-default';
 
@@ -36,10 +39,21 @@ const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
 const plugins = [
 	`medusa-fulfillment-manual`,
 	`medusa-payment-manual`,
+	// {
+	// 	resolve: `@medusajs/file-local`,
+	// 	options: {
+	// 		upload_dir: 'uploads',
+	// 	},
+	// },
 	{
-		resolve: `@medusajs/file-local`,
+		resolve: `medusa-file-spaces`,
 		options: {
-			upload_dir: 'uploads',
+			spaces_url: process.env.SPACE_URL,
+			bucket: process.env.SPACE_BUCKET,
+			region: process.env.SPACE_REGION,
+			endpoint: process.env.SPACE_ENDPOINT,
+			access_key_id: process.env.SPACE_ACCESS_KEY_ID,
+			secret_access_key: process.env.SPACE_SECRET_ACCESS_KEY,
 		},
 	},
 	{
@@ -79,6 +93,7 @@ const projectConfig = {
 	database_type: 'postgres',
 	store_cors: STORE_CORS,
 	admin_cors: ADMIN_CORS,
+	// auth_cors: AUTH_CORS,
 	database_extra:
 		process.env.NODE_ENV !== 'development'
 			? { ssl: { rejectUnauthorized: false } }
